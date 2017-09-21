@@ -1,0 +1,10 @@
+net: "train.prototxt"
+base_lr: 0.01
+lr_policy: "fixed"
+
+max_iter: 5000
+display: 200
+test_interval: 200
+test_iter: 100
+
+solver_mode: GPU
