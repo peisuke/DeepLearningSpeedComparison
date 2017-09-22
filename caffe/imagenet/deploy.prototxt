@@ -3,13 +3,13 @@ layer {
   name: "data"
   type: "Input"
   top: "data"
-  input_param { shape: { dim: 10 dim: 3 dim: 224 dim: 224 } }
+  input_param { shape: { dim: 1 dim: 3 dim: 224 dim: 224 } }
 }
 layer {
   name: "conv1/7x7_s2"
   type: "Convolution"
   bottom: "data"
-  top: "conv1/7x7_s2"
+  top: "conv1/7x7_s2_1"
   param {
     lr_mult: 1
     decay_mult: 1
@@ -36,13 +36,13 @@ layer {
 layer {
   name: "conv1/relu_7x7"
   type: "ReLU"
-  bottom: "conv1/7x7_s2"
-  top: "conv1/7x7_s2"
+  bottom: "conv1/7x7_s2_1"
+  top: "conv1/7x7_s2_2"
 }
 layer {
   name: "pool1/3x3_s2"
   type: "Pooling"
-  bottom: "conv1/7x7_s2"
+  bottom: "conv1/7x7_s2_2"
   top: "pool1/3x3_s2"
   pooling_param {
     pool: MAX
