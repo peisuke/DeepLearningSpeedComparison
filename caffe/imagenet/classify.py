@@ -14,7 +14,7 @@ PRETRAINED = './bvlc_googlenet.caffemodel'
 
 caffe.set_mode_gpu()
 
-mean = np.load('./ilsvrc_2012_mean.npy').mean(1).mean(1)
+mean = np.array([104.0, 117.0, 123.0], dtype=np.float32)
 channel_swap = (2,1,0)
 raw_scale = 255
 image_dims=(224, 224)
