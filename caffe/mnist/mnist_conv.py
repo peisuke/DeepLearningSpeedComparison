@@ -4,23 +4,33 @@ from StringIO import StringIO
 import lmdb
 import numpy as np
 import sys
+import tqdm
 
 caffe_root = os.getenv('CAFFE_ROOT')
 sys.path.insert(0, caffe_root + 'python')
 
 import caffe
 
-#Read lmdb dir and creat an array of the images in there
 def readLMDB(lmdbDir):
     cursor = lmdb.open(lmdbDir, readonly=True).begin().cursor()
     datum = caffe.proto.caffe_pb2.Datum()
+    images = []
+    labels = []
     for key, value in cursor:
         datum.ParseFromString(value)
-        s = StringIO()
-        s.write(datum.data)
-        s.seek(0)
-        
-        yield np.array(PIL.Image.open(s)), datum.label
+        img = caffe.io.datum_to_array(datum)
+        images.append(img) 
+        labels.append(datum.label)
+    images = np.asarray(images)
+    labels = np.asarray(labels)
+    return images, labels
 
-for image, label in readLMDB(lmdbDir):
-    pass
+lmdbDir = './examples/mnist/mnist_test_lmdb'
+images, labels = readLMDB(lmdbDir)
+
+cnn = caffe.Net('deploy.prototxt', './examples/mnist/lenet_iter_10000.caffemodel', caffe.TEST)
+
+for img, label in tqdm.tqdm(zip(images, labels)):
+    cnn.blobs['data'].data[...] = img
+    output = cnn.forward()
+    pred = output[cnn.outputs[0]][0]
