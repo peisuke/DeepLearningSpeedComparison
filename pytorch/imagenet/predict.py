@@ -8,58 +8,61 @@ from torch.autograd import Variable
 
 class VGG(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
-        self.conv1_1=L.Convolution2D(3, 64, kernel_size=3, stride=1, padding=1)
-        self.conv1_2=L.Convolution2D(64, 64, kernel_size=3, stride=1, padding=1)
-        self.conv2_1=L.Convolution2D(64, 128, kernel_size=3, stride=1, padding=1)
-        self.conv2_2=L.Convolution2D(128, 128, kernel_size=3, stride=1, padding=1)
-        self.conv3_1=L.Convolution2D(128, 256, kernel_size=3, stride=1, padding=1)
-        self.conv3_2=L.Convolution2D(256, 256, kernel_size=3, stride=1, padding=1)
-        self.conv3_3=L.Convolution2D(256, 256, kernel_size=3, stride=1, padding=1)
-        self.conv4_1=L.Convolution2D(256, 512, kernel_size=3, stride=1, padding=1)
-        self.conv4_2=L.Convolution2D(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv4_3=L.Convolution2D(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv5_1=L.Convolution2D(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv5_2=L.Convolution2D(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv5_3=L.Convolution2D(512, 512, kernel_size=3, stride=1, padding=1)
-        self.fc6=L.Linear(25088, 4096)
-        self.fc7=L.Linear(4096, 4096)
-        self.fc8=L.Linear(4096, 1000)
+        super(VGG, self).__init__()
+        self.conv1_1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1)
+        self.conv1_2 = nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1)
+        self.conv2_1 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1)
+        self.conv2_2 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+        self.conv3_1 = nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1)
+        self.conv3_2 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+        self.conv3_3 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+        self.conv4_1 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
+        self.conv4_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
+        self.conv4_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
+        self.conv5_1 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
+        self.conv5_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
+        self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
+        self.fc6 = nn.Linear(25088, 4096)
+        self.fc7 = nn.Linear(4096, 4096)
+        self.fc8 = nn.Linear(4096, 1000)
 
     def forward(self, x):
         h = F.relu(self.conv1_1(x))
         h = F.relu(self.conv1_2(h))
-        h = F.max_pooling_2d(h, 2, stride=2)
+        h = F.max_pool2d(h, 2, stride=2)
 
         h = F.relu(self.conv2_1(h))
         h = F.relu(self.conv2_2(h))
-        h = F.max_pooling_2d(h, 2, stride=2)
+        h = F.max_pool2d(h, 2, stride=2)
 
         h = F.relu(self.conv3_1(h))
         h = F.relu(self.conv3_2(h))
         h = F.relu(self.conv3_3(h))
-        h = F.max_pooling_2d(h, 2, stride=2)
+        h = F.max_pool2d(h, 2, stride=2)
 
         h = F.relu(self.conv4_1(h))
         h = F.relu(self.conv4_2(h))
         h = F.relu(self.conv4_3(h))
-        h = F.max_pooling_2d(h, 2, stride=2)
+        h = F.max_pool2d(h, 2, stride=2)
 
         h = F.relu(self.conv5_1(h))
         h = F.relu(self.conv5_2(h))
         h = F.relu(self.conv5_3(h))
-        h = F.max_pooling_2d(h, 2, stride=2)
+        h = F.max_pool2d(h, 2, stride=2)
+        
+        h = h.view(-1, 25088)
 
-        h = F.dropout(F.relu(self.fc6(h)), train=self.train, ratio=0.5)
-        h = F.dropout(F.relu(self.fc7(h)), train=self.train, ratio=0.5)
+        h = F.relu(self.fc6(h))
+        h = F.relu(self.fc7(h))
         h = self.fc8(h)
 
         return h
 
-model = Net()
+model = VGG()
 model.eval()
 
 data = np.zeros([1, 3, 224, 224], np.float32)
 data = torch.from_numpy(data)
+data = Variable(data)
 
 output = model(data)
