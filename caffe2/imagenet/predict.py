@@ -2,31 +2,65 @@ import numpy as np
 import os
 import shutil
 import caffe2.python.predictor.predictor_exporter as pe
-import tqdm
 
 from caffe2.python import core, model_helper, net_drawer, workspace, visualize, brew
 
 core.GlobalInit(['caffe2', '--caffe2_log_level=0'])
 
 def AddLeNetModel(model, data):
-    conv1 = brew.conv(model, data, 'conv1', dim_in=1, dim_out=20, kernel=5)
-    pool1 = brew.max_pool(model, conv1, 'pool1', kernel=2, stride=2)
-    conv2 = brew.conv(model, pool1, 'conv2', dim_in=20, dim_out=50, kernel=5)
-    pool2 = brew.max_pool(model, conv2, 'pool2', kernel=2, stride=2)
-    fc3 = brew.fc(model, pool2, 'fc3', dim_in=50 * 4 * 4, dim_out=500)
-    fc3 = brew.relu(model, fc3, fc3)
-    pred = brew.fc(model, fc3, 'pred', 500, 10)
+    conv1_1 = brew.conv(model, data, 'conv1_1', dim_in=3, dim_out=64, kernel=3, pad=1)
+    conv1_1 = brew.relu(model, conv1_1, conv1_1)
+    conv1_2 = brew.conv(model, conv1_1, 'conv1_2', dim_in=64, dim_out=64, kernel=3, pad=1)
+    conv1_2 = brew.relu(model, conv1_2, conv1_2)
+    pool1 = brew.max_pool(model, conv1_2, 'pool1', kernel=2, stride=2)
+    
+    conv2_1 = brew.conv(model, pool1, 'conv2_1', dim_in=64, dim_out=128, kernel=3, pad=1)
+    conv2_1 = brew.relu(model, conv2_1, conv2_1)
+    conv2_2 = brew.conv(model, conv2_1, 'conv2_2', dim_in=128, dim_out=128, kernel=3, pad=1)
+    conv2_2 = brew.relu(model, conv2_2, conv2_2)
+    pool2 = brew.max_pool(model, conv2_2, 'pool2', kernel=2, stride=2)
+    
+    conv3_1 = brew.conv(model, pool2, 'conv3_1', dim_in=128, dim_out=256, kernel=3, pad=1)
+    conv3_1 = brew.relu(model, conv3_1, conv3_1)
+    conv3_2 = brew.conv(model, conv3_1, 'conv3_2', dim_in=256, dim_out=256, kernel=3, pad=1)
+    conv3_2 = brew.relu(model, conv3_2, conv3_2)
+    conv3_3 = brew.conv(model, conv3_2, 'conv3_3', dim_in=256, dim_out=256, kernel=3, pad=1)
+    conv3_3 = brew.relu(model, conv3_3, conv3_3)
+    pool3 = brew.max_pool(model, conv3_3, 'pool3', kernel=2, stride=2)
+   
+    conv4_1 = brew.conv(model, pool3, 'conv4_1', dim_in=256, dim_out=512, kernel=3, pad=1)
+    conv4_1 = brew.relu(model, conv4_1, conv4_1)
+    conv4_2 = brew.conv(model, conv4_1, 'conv4_2', dim_in=512, dim_out=512, kernel=3, pad=1)
+    conv4_2 = brew.relu(model, conv4_2, conv4_2)
+    conv4_3 = brew.conv(model, conv4_2, 'conv4_3', dim_in=512, dim_out=512, kernel=3, pad=1)
+    conv4_3 = brew.relu(model, conv4_3, conv4_3)
+    pool4 = brew.max_pool(model, conv4_3, 'pool4', kernel=2, stride=2)
+ 
+    conv5_1 = brew.conv(model, pool4, 'conv5_1', dim_in=512, dim_out=512, kernel=3, pad=1)
+    conv5_1 = brew.relu(model, conv5_1, conv5_1)
+    conv5_2 = brew.conv(model, conv5_1, 'conv5_2', dim_in=512, dim_out=512, kernel=3, pad=1)
+    conv5_2 = brew.relu(model, conv5_2, conv5_2)
+    conv5_3 = brew.conv(model, conv5_2, 'conv5_3', dim_in=512, dim_out=512, kernel=3, pad=1)
+    conv5_3 = brew.relu(model, conv5_3, conv5_3)
+    pool5 = brew.max_pool(model, conv5_3, 'pool5', kernel=2, stride=2)
+ 
+    fc6 = brew.fc(model, pool5, 'fc6', dim_in=25088, dim_out=4096)
+    fc6 = brew.relu(model, fc6, fc6)
+    fc7 = brew.fc(model, fc6, 'fc7', dim_in=4096, dim_out=4096)
+    fc7 = brew.relu(model, fc7, fc7)
+    pred = brew.fc(model, fc7, 'pred', 4096, 1000)
     softmax = brew.softmax(model, pred, 'softmax')
     return softmax
 
-arg_scope = {"order": "NCHW"}
-model = model_helper.ModelHelper(name="vgg", arg_scope=arg_scope, init_params=True)
+model = model_helper.ModelHelper(name="vgg", init_params=True)
 
 softmax = AddLeNetModel(model, "data")
 
 workspace.RunNetOnce(model.param_init_net)
-workspace.CreateNet(model.net, overwrite=True)
 
 data = np.zeros([1, 3, 224, 224], np.float32)
 workspace.FeedBlob("data", data)
+
+workspace.CreateNet(model.net)
 workspace.RunNet(model.net.Proto().name)
+ref_out = workspace.FetchBlob("softmax")
