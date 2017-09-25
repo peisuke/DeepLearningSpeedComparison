@@ -7,7 +7,7 @@ from torchvision import datasets, transforms
 from torch.autograd import Variable
 
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST('../', train=False, download=True, transform=transforms.Compose([
+    datasets.MNIST('./', train=False, download=True, transform=transforms.Compose([
                        transforms.ToTensor(),
                        transforms.Normalize((0.1307,), (0.3081,))
                    ])),

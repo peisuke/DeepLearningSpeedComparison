@@ -7,7 +7,7 @@ from torchvision import datasets, transforms
 from torch.autograd import Variable
 
 trans = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (1.0,))])
-test_set = datasets.MNIST(root='../', train=False, transform=trans, download=True)
+test_set = datasets.MNIST(root='./', train=False, transform=trans, download=True)
 test_loader = torch.utils.data.DataLoader(
                 dataset=test_set,
                 batch_size=1,
