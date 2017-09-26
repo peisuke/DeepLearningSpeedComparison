@@ -12,12 +12,11 @@ from mnist_data import data_iterator_mnist
 
 def mlp(image, test=False):
     image /= 255.0
-    c1 = PF.convolution(image, 32, (3, 3), name='conv1')
-    c1 = F.relu(F.max_pooling(c1, (2, 2)), inplace=True)
-    c2 = PF.convolution(c1, 64, (3, 3), name='conv2')
-    c2 = F.relu(F.max_pooling(c2, (2, 2)), inplace=True)
-    c3 = F.relu(PF.affine(c2, 512, name='fc3'), inplace=True)
-    c4 = PF.affine(c3, 10, name='fc4')
+    c1 = F.relu(PF.convolution(image, 32, (3, 3), name='conv1'), inplace=True)
+    c2 = F.relu(PF.convolution(c1, 128, (3, 3), name='conv2'), inplace=True)
+    c3 = F.relu(PF.convolution(c2, 256, (3, 3), name='conv3'), inplace=True)
+    c4 = F.relu(PF.affine(c3, 512, name='fc3'), inplace=True)
+    c5 = PF.affine(c3, 10, name='fc4')
     return c4
 
 # Get context.

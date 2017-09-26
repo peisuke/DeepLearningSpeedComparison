@@ -4,8 +4,8 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import tqdm
 
-n_hidden_1 = 256
-n_hidden_2 = 256
+n_hidden_1 = 1000 
+n_hidden_2 = 1000 
 n_input = 784
 n_classes = 10
 

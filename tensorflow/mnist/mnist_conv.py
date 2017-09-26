@@ -14,12 +14,11 @@ X = tf.placeholder("float", [None, n_input])
 
 def multilayer_perceptron(x):
     x = tf.reshape(x, shape=[-1, 28, 28, 1])
-    conv1 = tf.layers.conv2d(x, 32, 5, activation=tf.nn.relu)
-    conv1 = tf.layers.max_pooling2d(conv1, 2, 2)
-    conv2 = tf.layers.conv2d(conv1, 64, 3, activation=tf.nn.relu)
-    conv2 = tf.layers.max_pooling2d(conv2, 2, 2)
-    fc1 = tf.contrib.layers.flatten(conv2)
-    fc1 = tf.layers.dense(fc1, 1024)
+    conv1 = tf.layers.conv2d(x, 32, 3, padding='same', activation=tf.nn.relu)
+    conv2 = tf.layers.conv2d(conv1, 128, 3, padding='same', activation=tf.nn.relu)
+    conv3 = tf.layers.conv2d(conv2, 256, 3, padding='same', activation=tf.nn.relu)
+    fc1 = tf.contrib.layers.flatten(conv3)
+    fc1 = tf.layers.dense(fc1, 512)
     out = tf.layers.dense(fc1, n_classes)
     return out
 

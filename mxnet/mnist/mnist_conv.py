@@ -28,15 +28,15 @@ path='http://yann.lecun.com/exdb/mnist/'
 
 def create_network():
     data = mx.sym.Variable('data')
-    h = mx.sym.Convolution(data, kernel=(3, 3), pad=(1, 1), num_filter=10, name = "conv1")
+    h = mx.sym.Convolution(data, kernel=(3, 3), pad=(1, 1), num_filter=32, name = "conv1")
     h = mx.sym.Activation(h, name='relu1', act_type="relu")
-    h = mx.sym.Pooling(h, pool_type="max", kernel=(2, 2), stride=(2,2), name="pool1")
-    h = mx.sym.Convolution(data, kernel=(3, 3), pad=(1, 1), num_filter=20, name = "conv2")
+    h = mx.sym.Convolution(data, kernel=(3, 3), pad=(1, 1), num_filter=128, name = "conv2")
     h = mx.sym.Activation(h, name='relu2', act_type="relu")
-    h = mx.sym.Pooling(h, pool_type="max", kernel=(2, 2), stride=(2,2), name="pool2")
-    h = mx.sym.Flatten(h)
-    h = mx.sym.FullyConnected(h, name='fc3', num_hidden = 1000)
+    h = mx.sym.Convolution(data, kernel=(3, 3), pad=(1, 1), num_filter=256, name = "conv3")
     h = mx.sym.Activation(h, name='relu3', act_type="relu")
+    h = mx.sym.Flatten(h)
+    h = mx.sym.FullyConnected(h, name='fc3', num_hidden = 512)
+    h = mx.sym.Activation(h, name='relu4', act_type="relu")
     h = mx.sym.FullyConnected(h, name='fc4', num_hidden=10)
     return h
  
