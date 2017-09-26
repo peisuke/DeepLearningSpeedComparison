@@ -11,9 +11,9 @@ import caffe
 MODEL_FILE = './mobilenet_deploy.prototxt'
 PRETRAINED = './mobilenet.caffemodel'
 
-caffe.set_mode_gpu()
+caffe.set_mode_cpu()
 
-mean = np.array([104.0, 117.0, 123.0], dtype=np.float32)
+mean = np.array([103.94,116.78,123.68], dtype=np.float32)
 channel_swap = (2,1,0)
 raw_scale = 255
 image_dims=(224, 224)
