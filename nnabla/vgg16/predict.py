@@ -33,7 +33,7 @@ def vgg(image, test=False):
     h = PF.affine(h, 4096, name='fc2')
     h = F.relu(h)
     h = PF.affine(h, 1000, name='fc3')
-    return h
+    return F.softmax(h)
 
 # Get context.
 ctx = extension_context('cpu', device_id=0)

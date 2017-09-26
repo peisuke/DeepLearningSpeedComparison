@@ -34,7 +34,7 @@ def create_network():
     fc2  = mx.sym.FullyConnected(act1, name='fc2', num_hidden = 1000)
     act2 = mx.sym.Activation(fc2, name='relu2', act_type="relu")
     fc3  = mx.sym.FullyConnected(act2, name='fc3', num_hidden=10)
-    return fc3 
+    return mx.sym.softmax(fc3)
  
 mlp = create_network()
 mod = mx.mod.Module(symbol=mlp, context=mx.cpu(), label_names=None)

@@ -52,12 +52,11 @@ def mobilenet(x):
             net = conv_dw(net, 1024, stride=2, sc='conv_ds_13')
             net = conv_dw(net, 1024, stride=1, sc='conv_ds_14')
             net = slim.avg_pool2d(net, [7, 7], scope='avg_pool_15')
-            return net
+            return tf.nn.softmax(net)
 
 # tf Graph input
 X = tf.placeholder("float", [None, 224, 224, 3])
-net = mobilenet(X)
-Y = tf.nn.softmax(net)
+Y = mobilenet(X)
 
 init = tf.initialize_all_variables()
 

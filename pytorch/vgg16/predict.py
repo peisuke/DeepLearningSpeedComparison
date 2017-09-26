@@ -56,7 +56,7 @@ class VGG(nn.Module):
         h = F.relu(self.fc7(h))
         h = self.fc8(h)
 
-        return h
+        return F.softmax(h)
 
 model = VGG()
 model.eval()

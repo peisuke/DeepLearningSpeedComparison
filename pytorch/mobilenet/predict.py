@@ -50,7 +50,7 @@ class MobileNet(nn.Module):
         x = self.model(x)
         x = x.view(-1, 1024)
         x = self.fc(x)
-        return x
+        return F.softmax(x)
 
 model = MobileNet()
 model.eval()
