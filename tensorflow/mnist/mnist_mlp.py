@@ -4,37 +4,27 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import tqdm
 
-n_hidden_1 = 1000 
-n_hidden_2 = 1000 
-n_input = 784
-n_classes = 10
-
-# tf Graph input
-X = tf.placeholder("float", [None, n_input])
-
 weights = {
-    'h1': tf.Variable(tf.random_normal([n_input, n_hidden_1])),
-    'h2': tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),
-    'out': tf.Variable(tf.random_normal([n_hidden_2, n_classes]))
+    'h1': tf.Variable(tf.random_normal([784, 1000])),
+    'h2': tf.Variable(tf.random_normal([1000, 1000])),
+    'out': tf.Variable(tf.random_normal([1000, 10]))
 }
 biases = {
-    'b1': tf.Variable(tf.random_normal([n_hidden_1])),
-    'b2': tf.Variable(tf.random_normal([n_hidden_2])),
-    'out': tf.Variable(tf.random_normal([n_classes]))
+    'b1': tf.Variable(tf.random_normal([1000])),
+    'b2': tf.Variable(tf.random_normal([1000])),
+    'out': tf.Variable(tf.random_normal([10]))
 }
 
 def multilayer_perceptron(x):
     layer_1 = tf.add(tf.matmul(x, weights['h1']), biases['b1'])
     layer_2 = tf.add(tf.matmul(layer_1, weights['h2']), biases['b2'])
     out_layer = tf.matmul(layer_2, weights['out']) + biases['out']
-    return out_layer
-
+    return tf.nn.softmax(out_layer)
 
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
-# tf Graph input
-logits = multilayer_perceptron(X)
-Y = tf.nn.softmax(logits)
+X = tf.placeholder("float", [None, 784])
+Y = multilayer_perceptron(X)
 
 init = tf.initialize_all_variables()
 

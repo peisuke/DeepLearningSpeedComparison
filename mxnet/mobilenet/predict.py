@@ -42,7 +42,7 @@ def create_network():
     net = conv_dw(net, 1024, 1024, stride=1, name='conv_ds_14')
     net = mx.symbol.Pooling(data=net, global_pool=True, kernel=(7, 7), pool_type='avg', name='pool1')
 
-    return net
+    return mx.sym.softmax(net)
 
 mlp = create_network()
 mod = mx.mod.Module(symbol=mlp, context=mx.cpu(), label_names=None)

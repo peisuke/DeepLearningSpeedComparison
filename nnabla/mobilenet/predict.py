@@ -44,7 +44,7 @@ def mobilenet(image, test=False):
     net = conv_dw(net, 1024, 1024, stride=1, name='conv_ds_14')
     h = F.average_pooling(net, (7, 7))
 
-    return h
+    return F.softmax(h)
 
 # Get context.
 ctx = extension_context('cpu', device_id=0)

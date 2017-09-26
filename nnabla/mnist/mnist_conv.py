@@ -17,7 +17,7 @@ def mlp(image, test=False):
     c3 = F.relu(PF.convolution(c2, 256, (3, 3), name='conv3'), inplace=True)
     c4 = F.relu(PF.affine(c3, 512, name='fc3'), inplace=True)
     c5 = PF.affine(c3, 10, name='fc4')
-    return c4
+    return F.softmax(c5)
 
 # Get context.
 ctx = extension_context('cpu', device_id=0)

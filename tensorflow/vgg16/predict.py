@@ -30,12 +30,11 @@ def vgg(x):
     d1 = tf.layers.dense(flat5, 4096)
     d2 = tf.layers.dense(d1, 4096)
     out = tf.layers.dense(d2, 1000)
-    return out
+    return tf.nn.softmax(out)
 
 # tf Graph input
 X = tf.placeholder("float", [None, 224, 224, 3])
-net = vgg(X)
-Y = tf.nn.softmax(net)
+Y = vgg(X)
 
 init = tf.initialize_all_variables()
 

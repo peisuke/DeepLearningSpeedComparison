@@ -24,7 +24,7 @@ class Net(nn.Module):
         x = x.view((-1, 784))
         h1 = F.relu(self.l1(x))
         h2 = F.relu(self.l2(h1))
-        return self.l3(h2)
+        return F.softmax(self.l3(h2))
 
 model = Net()
 
