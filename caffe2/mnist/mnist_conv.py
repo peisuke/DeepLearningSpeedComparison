@@ -74,13 +74,15 @@ def AddInput(model, batch_size, db, db_type):
     return data, label
 
 def AddLeNetModel(model, data):
-    conv1 = brew.conv(model, data, 'conv1', dim_in=1, dim_out=20, kernel=5)
-    pool1 = brew.max_pool(model, conv1, 'pool1', kernel=2, stride=2)
-    conv2 = brew.conv(model, pool1, 'conv2', dim_in=20, dim_out=50, kernel=5)
-    pool2 = brew.max_pool(model, conv2, 'pool2', kernel=2, stride=2)
-    fc3 = brew.fc(model, pool2, 'fc3', dim_in=50 * 4 * 4, dim_out=500)
+    conv1 = brew.conv(model, data, 'conv1', dim_in=1, dim_out=32, kernel=3, pad=1)
+    conv1 = brew.relu(model, conv1, conv1)
+    conv2 = brew.conv(model, conv1, 'conv2', dim_in=32, dim_out=128, kernel=3, pad=1)
+    conv2 = brew.relu(model, conv2, conv2)
+    conv3 = brew.conv(model, conv2, 'conv3', dim_in=128, dim_out=256, kernel=3, pad=1)
+    conv3 = brew.relu(model, conv3, conv3)
+    fc3 = brew.fc(model, conv3, 'fc3', dim_in=256 * 28 * 28, dim_out=512)
     fc3 = brew.relu(model, fc3, fc3)
-    pred = brew.fc(model, fc3, 'pred', 500, 10)
+    pred = brew.fc(model, fc3, 'pred', 512, 10)
     softmax = brew.softmax(model, pred, 'softmax')
     return softmax
 
