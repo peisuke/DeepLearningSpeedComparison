@@ -1,4 +1,6 @@
 import os
+import tqdm
+import time
 import numpy as np
 import nnabla as nn
 import nnabla.logger as logger
@@ -54,5 +56,11 @@ nn.set_default_context(ctx)
 vimage = nn.Variable([1, 3, 224, 224])
 vpred = mobilenet(vimage, test=True)
 
-vimage.d = np.zeros([1, 3, 224, 224], np.float32)
-vpred.forward(clear_buffer=True)
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    vimage.d = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    start_time = time.time()
+    vpred.forward(clear_buffer=True)
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('nnabla-mobilenet', np.array(timings).mean(), np.array(timings).std()))
