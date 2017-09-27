@@ -1,3 +1,2 @@
 #!/bin/bash
-wget http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel
-wget https://raw.githubusercontent.com/HoldenCaulfieldRye/caffe/master/data/ilsvrc12/synset_words.txt
+wget http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel
