@@ -1,8 +1,9 @@
 import numpy as np
+import tqdm
 import os
 import shutil
+import time
 import caffe2.python.predictor.predictor_exporter as pe
-
 from caffe2.python import core, model_helper, net_drawer, workspace, visualize, brew
 
 core.GlobalInit(['caffe2', '--caffe2_log_level=0'])
@@ -60,7 +61,15 @@ workspace.RunNetOnce(model.param_init_net)
 
 data = np.zeros([1, 3, 224, 224], np.float32)
 workspace.FeedBlob("data", data)
-
 workspace.CreateNet(model.net)
-workspace.RunNet(model.net.Proto().name)
-ref_out = workspace.FetchBlob("softmax")
+
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    start_time = time.time()
+    workspace.FeedBlob("data", data)
+    workspace.RunNet(model.net.Proto().name)
+    ref_out = workspace.FetchBlob("softmax")
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('caffe2-vgg-16', np.array(timings).mean(), np.array(timings).std()))
