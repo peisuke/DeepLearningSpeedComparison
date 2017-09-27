@@ -2,6 +2,8 @@
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import numpy as np
+import tqdm
+import time
 
 def conv_bn(inputs, oup, stride, sc):
     conv = slim.convolution2d(inputs,
@@ -63,5 +65,11 @@ init = tf.initialize_all_variables()
 sess = tf.Session()
 sess.run(init)
 
-batch_xs = np.zeros([1, 224, 224, 3], np.float32)
-ret = sess.run(Y, feed_dict={X: batch_xs})
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    batch_xs = np.random.randn(1, 224, 224, 3).astype(np.float32)
+    start_time = time.time()
+    ret = sess.run(Y, feed_dict={X: batch_xs})
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('tensorflow-mobilenet', np.array(timings).mean(), np.array(timings).std()))
