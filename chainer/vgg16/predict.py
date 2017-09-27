@@ -12,6 +12,7 @@ from chainer.training import extensions
 
 import numpy as np
 import tqdm
+import time
 
 # Network definition
 class VGG(chainer.Chain):
@@ -72,8 +73,15 @@ class VGG(chainer.Chain):
 
 def main():
     model = VGG()
-    data = np.zeros([1, 3, 224, 224], np.float32) 
-    ret = F.softmax(model(chainer.Variable(data)))
+    
+    nb_itr = 20
+    timings = []
+    for i in tqdm.tqdm(range(nb_itr)):
+        data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+        start_time = time.time()
+        ret = F.softmax(model(chainer.Variable(data)))
+        timings.append(time.time() - start_time)
+    print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
 
 if __name__ == '__main__':
     main()
