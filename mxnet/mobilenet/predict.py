@@ -2,6 +2,7 @@ import numpy as np
 import os
 import gzip
 import struct
+import time
 import tqdm
 from collections import namedtuple
 import mxnet as mx
@@ -48,9 +49,15 @@ mlp = create_network()
 mod = mx.mod.Module(symbol=mlp, context=mx.cpu(), label_names=None)
 mod.bind(data_shapes=[('data', (1, 3, 224, 224))], for_training=False)
 mod.init_params(initializer=mx.init.Xavier(magnitude=2.))
-
 Batch = namedtuple('Batch', ['data'])
-data = np.zeros([1, 3, 224, 224], np.float32)
-batch = Batch([mx.nd.array(data)])
-mod.forward(batch)
-prob = mod.get_outputs()
+
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    start_time = time.time()
+    batch = Batch([mx.nd.array(data)])
+    mod.forward(batch)
+    prob = mod.get_outputs()
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('mxnet-mobilenet', np.array(timings).mean(), np.array(timings).std()))

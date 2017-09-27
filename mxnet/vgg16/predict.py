@@ -3,6 +3,7 @@ import os
 import gzip
 import struct
 import tqdm
+import time
 from collections import namedtuple
 import mxnet as mx
 
@@ -60,7 +61,14 @@ mod.bind(data_shapes=[('data', (1, 3, 224, 224))], for_training=False)
 mod.init_params(initializer=mx.init.Xavier(magnitude=2.))
 
 Batch = namedtuple('Batch', ['data'])
-data = np.zeros([1, 3, 224, 224], np.float32)
-batch = Batch([mx.nd.array(data)])
-mod.forward(batch)
-prob = mod.get_outputs()
+
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    start_time = time.time()
+    batch = Batch([mx.nd.array(data)])
+    mod.forward(batch)
+    prob = mod.get_outputs()
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
