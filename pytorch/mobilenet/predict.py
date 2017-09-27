@@ -1,4 +1,6 @@
 import numpy as np
+import tqdm
+import time
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -55,8 +57,13 @@ class MobileNet(nn.Module):
 model = MobileNet()
 model.eval()
 
-data = np.zeros([1, 3, 224, 224], np.float32)
-data = torch.from_numpy(data)
-data = Variable(data)
-
-output = model(data)
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    data = torch.from_numpy(data)
+    start_time = time.time()
+    data = Variable(data)
+    output = model(data)
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('pytorch-mobilenet', np.array(timings).mean(), np.array(timings).std()))

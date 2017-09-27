@@ -1,3 +1,5 @@
+import tqdm
+import time
 import numpy as np
 import torch
 import torch.nn as nn
@@ -61,8 +63,13 @@ class VGG(nn.Module):
 model = VGG()
 model.eval()
 
-data = np.zeros([1, 3, 224, 224], np.float32)
-data = torch.from_numpy(data)
-data = Variable(data)
-
-output = model(data)
+nb_itr = 20
+timings = []
+for i in tqdm.tqdm(range(nb_itr)):
+    data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    data = torch.from_numpy(data)
+    start_time = time.time()
+    data = Variable(data)
+    output = model(data)
+    timings.append(time.time() - start_time)
+print('%10s : %f (sd %f)'% ('pytorch-vgg-16', np.array(timings).mean(), np.array(timings).std()))
