@@ -69,6 +69,6 @@ for i in tqdm.tqdm(range(nb_itr)):
     start_time = time.time()
     batch = Batch([mx.nd.array(data)])
     mod.forward(batch)
-    prob = mod.get_outputs()
+    prob = mod.get_outputs()[0].asnumpy()
     timings.append(time.time() - start_time)
 print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
