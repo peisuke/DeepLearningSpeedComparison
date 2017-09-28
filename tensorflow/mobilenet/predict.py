@@ -62,7 +62,10 @@ Y = mobilenet(X)
 
 init = tf.initialize_all_variables()
 
-sess = tf.Session()
+config = tf.ConfigProto()
+config.graph_options.optimizer_options.global_jit_level = tf.OptimizerOptions.ON_1
+
+sess = tf.Session(config=config)
 sess.run(init)
 
 nb_itr = 20
