@@ -86,6 +86,8 @@ timings = []
 for i in tqdm.tqdm(range(nb_itr)):
     data = np.random.randn(1, 3, 224, 224).astype(np.float32)
     start_time = time.time()
-    ret = F.softmax(model(chainer.Variable(data)))
+    with chainer.using_config('train', False):
+       with chainer.using_config('enable_backprop', False):
+           ret = F.softmax(model(chainer.Variable(data)))
     timings.append(time.time() - start_time)
 print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
