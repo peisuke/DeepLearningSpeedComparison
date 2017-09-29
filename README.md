@@ -9,15 +9,15 @@ I will implement weight coping as soon as possible.
 ## About
 
 In this repository, the compared frameworks are as below.
-- [Caffe](http://caffe.berkeleyvision.org/):[Repo](https://github.com/BVLC/caffe)
-- [Caffe2](https://caffe2.ai/):[Repo](https://github.com/caffe2/caffe2)
-- [Chainer](https://chainer.org/):[Repo](https://github.com/chainer/chainer)
-- [Mxnet](https://mxnet.incubator.apache.org/):[Repo](https://github.com/apache/incubator-mxnet)
-- [Tensorflow](https://www.tensorflow.org/):[Repo](https://github.com/tensorflow/tensorflow)
-- [Pytorch](http://pytorch.org/):[Repo](https://github.com/pytorch/pytorch)
-- [NNabla](https://nnabla.org/):[Repo](https://github.com/sony/nnabla)
-- CNTK (Not yet)
-- Theano (Not yet)
+- [Caffe](http://caffe.berkeleyvision.org/) : [repo](https://github.com/BVLC/caffe)
+- [Caffe2](https://caffe2.ai/) : [repo](https://github.com/caffe2/caffe2)
+- [Chainer](https://chainer.org/) : [repo](https://github.com/chainer/chainer)
+- [Mxnet](https://mxnet.incubator.apache.org/) : [repo](https://github.com/apache/incubator-mxnet)
+- [Tensorflow](https://www.tensorflow.org/) : [repo](https://github.com/tensorflow/tensorflow)
+- [Pytorch](http://pytorch.org/) : [repo](https://github.com/pytorch/pytorch)
+- [NNabla](https://nnabla.org/) : [repo](https://github.com/sony/nnabla)
+- [CNTK](https://www.microsoft.com/en-us/cognitive-toolkit/) (Not yet) : [repo](https://github.com/Microsoft/CNTK/)
+- [Theano](http://deeplearning.net/software/theano/) (Not yet) : [repo](https://github.com/Theano/Theano)
 
 I prepared various setup condition about the frameworks, 
 e.g. with/without MKL, pip or build.
