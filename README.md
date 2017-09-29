@@ -4,7 +4,7 @@ This repository is test code for comparison of several deep learning frameworks.
 The target models are VGG-16 and MobileNet. All sample code have docker file, and
 the test environment is easy to set up. Currently, the parameters of each network 
 are randomly generated. I have not confirm the result is correct yet. 
-I will implement weight coping as soon as possible.
+I will implement weight importing as soon as possible.
 
 ## About
 
