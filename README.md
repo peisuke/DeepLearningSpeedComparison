@@ -6,10 +6,6 @@ the test environment is easy to set up. Currently, the parameters of each networ
 are randomly generated. I have not confirm the result is correct yet. 
 I will implement weight importing as soon as possible.
 
-本リポジトリは、Deep Learningフレームワークの速度比較のためのリポジトリです。現状ではVGGとMobileNetのみ比較してます。
-フレームワークを動かすためのDockerfileを用意しており、容易にセットアップできます。注意点として、ネットワークのパラメータや
-入力画像はランダムに生成しており、結果が正しいかは未確認です。近々、学習済みモデルの導入をしようと思っています。
-
 ## About
 
 In this repository, the compared frameworks are as below.
