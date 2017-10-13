@@ -44,9 +44,13 @@ In the created docker containor, clone the repository and run test code.
 __Currently, the results are not reliable. As soon as possible, I will check my code.__
 
 ```
-caffe(openblas, 1.0)
+caffe(atlas, 1.0)
 caffe-vgg-16 : 13.900894 (sd 0.416803)
 caffe-mobilenet : 0.121934 (sd 0.007861)
+
+caffe(openblas, 1.0)
+caffe-vgg-16 : 3.308656 (sd 0.043299)
+caffe-mobilenet : 0.098129 (sd 0.011925)
 
 caffe(mkl, 1.0)
 caffe-vgg-16 : 3.005638 (sd 0.129965)
