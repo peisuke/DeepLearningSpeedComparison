@@ -31,6 +31,7 @@ $ docker build -t {NAME} .
 $ docker run -it --rm {NAME}
 ```
 
+NAME is an arbitrary docker image name defined by the user. It is only used for managing created docker images.
 In the created docker containor, clone the repository and run test code.
 
 ```
