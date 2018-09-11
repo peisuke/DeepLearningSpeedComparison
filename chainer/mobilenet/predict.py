@@ -9,6 +9,7 @@ import chainer.functions as F
 import chainer.links as L
 from chainer import training
 from chainer.training import extensions
+from chainer.backends.intel64 import is_ideep_available
 
 import numpy as np
 import tqdm
@@ -79,7 +80,13 @@ class MobileNet(chainer.Chain):
         x = F.average_pooling_2d(x, 7, stride=1)
         return F.softmax(x)
 
+enable_ideep = is_ideep_available()
 model = MobileNet()
+
+mode = "never"
+if enable_ideep:
+    model.to_intel64()
+    mode = "always"
 
 nb_itr = 20
 timings = []
@@ -88,6 +95,7 @@ for i in tqdm.tqdm(range(nb_itr)):
     start_time = time.time()
     with chainer.using_config('train', False):
        with chainer.using_config('enable_backprop', False):
-           ret = F.softmax(model(chainer.Variable(data)))
+           with chainer.using_config('use_ideep', mode):
+               ret = F.softmax(model(chainer.Variable(data)))
     timings.append(time.time() - start_time)
 print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))

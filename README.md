@@ -97,11 +97,11 @@ tensorflow(mkl, r1.0)
 tensorflow-vgg-16 : 0.163384 (sd 0.011794)
 tensorflow-mobilenet : 0.034751 (sd 0.011750)
 
-chainer(2.0)
-chainer-vgg-16 : 0.497946 (sd 0.024975)
-chainer-mobilenet : 0.120230 (sd 0.013276)
+chainer(4.4.0)
+chainer-vgg-16 : 0.582105 (sd 0.019283)
+chainer-mobilenet : 0.096270 (sd 0.020240)
 
-chainer(2.1, numpy with mkl)
-chainer-vgg-16 : 0.329744 (sd 0.013079)
-chainer-vgg-16 : 0.078193 (sd 0.017298)
+chainer(4.4.0, ideep4py)
+chainer-vgg-16 : 0.089582 (sd 0.013343)
+chainer-mobilenet : 0.058015 (sd 0.011278)
 ```

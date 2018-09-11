@@ -20,4 +20,5 @@ RUN pip3 install numpy \
     pandas \
     matplotlib \
     pillow \
-    chainer==2.0.0
+    tqdm \
+    chainer==4.4.0
