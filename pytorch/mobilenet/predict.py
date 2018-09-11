@@ -52,7 +52,7 @@ class MobileNet(nn.Module):
         x = self.model(x)
         x = x.view(-1, 1024)
         x = self.fc(x)
-        return F.softmax(x)
+        return F.softmax(x, dim=1)
 
 model = MobileNet()
 model.eval()
@@ -63,7 +63,7 @@ for i in tqdm.tqdm(range(nb_itr)):
     data = np.random.randn(1, 3, 224, 224).astype(np.float32)
     data = torch.from_numpy(data)
     start_time = time.time()
-    data = Variable(data)
-    output = model(data)
+    with torch.no_grad():
+        output = model(data)
     timings.append(time.time() - start_time)
 print('%10s : %f (sd %f)'% ('pytorch-mobilenet', np.array(timings).mean(), np.array(timings).std()))
