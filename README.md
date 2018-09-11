@@ -35,8 +35,8 @@ NAME is an arbitrary docker image name defined by the user. It is only used for 
 In the created docker containor, clone the repository and run test code.
 
 ```
-# git clone https://github.com/peisuke/dl_samples.git
-# cd dl_samples/{FRAMEWORK}/vgg16
+# git clone https://github.com/peisuke/DeepLearningSpeedComparison.git
+# cd DeepLearningSpeedComparison/{FRAMEWORK}/vgg16
 # python3 (or python) predict.py
 ```
 
