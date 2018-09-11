@@ -73,9 +73,9 @@ mxnet(mkl)
 mxnet-vgg-16 : 0.176063 (sd 0.239229)
 mxnet-mobilenet : 0.022441 (sd 0.018798)
 
-pytorch
-pytorch-vgg-16 : 0.477001 (sd 0.011902)
-pytorch-mobilenet : 0.094431 (sd 0.008181)
+pytorch(0.4.1)
+pytorch-vgg-16 : 0.546202 (sd 0.008096)
+pytorch-mobilenet : 0.113275 (sd 0.006721)
 
 nnabla
 nnabla-vgg-16 : 1.472355 (sd 0.040928)
