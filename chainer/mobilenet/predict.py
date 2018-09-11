@@ -98,4 +98,4 @@ for i in tqdm.tqdm(range(nb_itr)):
            with chainer.using_config('use_ideep', mode):
                ret = F.softmax(model(chainer.Variable(data)))
     timings.append(time.time() - start_time)
-print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
+print('%10s : %f (sd %f)'% ('chainer-mobilenet', np.array(timings).mean(), np.array(timings).std()))

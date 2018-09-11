@@ -89,8 +89,9 @@ def main():
             with chainer.using_config('enable_backprop', False):
                 with chainer.using_config('use_ideep', mode):
     	            ret = F.softmax(model(chainer.Variable(data)))
+        print(ret.data.ravel()[0])
         timings.append(time.time() - start_time)
-    print('%10s : %f (sd %f)'% ('mxnet-vgg-16', np.array(timings).mean(), np.array(timings).std()))
+    print('%10s : %f (sd %f)'% ('chainer-vgg-16', np.array(timings).mean(), np.array(timings).std()))
 
 if __name__ == '__main__':
     main()
