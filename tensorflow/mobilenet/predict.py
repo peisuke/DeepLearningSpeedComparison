@@ -5,6 +5,8 @@ import numpy as np
 import tqdm
 import time
 
+_WARMUP_NUM_LOOPS = 30
+
 def conv_bn(inputs, oup, stride, sc):
     conv = slim.convolution2d(inputs,
                               oup,
@@ -67,6 +69,10 @@ config.graph_options.optimizer_options.global_jit_level = tf.OptimizerOptions.ON
 
 sess = tf.Session(config=config)
 sess.run(init)
+
+for i in range(_WARMUP_NUM_LOOPS):
+    batch_xs = np.random.randn(1, 224, 224, 3).astype(np.float32)
+    _ = sess.run(Y, feed_dict={X: batch_xs})
 
 nb_itr = 20
 timings = []

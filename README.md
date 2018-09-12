@@ -35,8 +35,8 @@ NAME is an arbitrary docker image name defined by the user. It is only used for 
 In the created docker containor, clone the repository and run test code.
 
 ```
-# git clone https://github.com/peisuke/dl_samples.git
-# cd dl_samples/{FRAMEWORK}/vgg16
+# git clone https://github.com/peisuke/DeepLearningSpeedComparison.git
+# cd DeepLearningSpeedComparison/{FRAMEWORK}/vgg16
 # python3 (or python) predict.py
 ```
 
@@ -81,9 +81,9 @@ nnabla
 nnabla-vgg-16 : 1.472355 (sd 0.040928)
 nnabla-mobilenet : 3.984539 (sd 0.018452)
 
-tensorflow(pip, r1.3)
-tensorflow-vgg-16 : 0.275986 (sd 0.009202)
-tensorflow-mobilenet : 0.029405 (sd 0.004876)
+tensorflow(pip, v1.10.1)
+tensorflow-vgg-16 : 0.206103 (sd 0.011668)
+tensorflow-mobilenet : 0.045416 (sd 0.002605)
 
 tensorflow(opt, r1.3)
 tensorflow-vgg-16 : 0.144360 (sd 0.009217)
