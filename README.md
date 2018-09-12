@@ -85,9 +85,9 @@ tensorflow(pip, v1.10.1)
 tensorflow-vgg-16 : 0.206103 (sd 0.011668)
 tensorflow-mobilenet : 0.045416 (sd 0.002605)
 
-tensorflow(opt, r1.3)
-tensorflow-vgg-16 : 0.144360 (sd 0.009217)
-tensorflow-mobilenet : 0.022406 (sd 0.007655)
+tensorflow(opt, r1.10.1)
+tensorflow-vgg-16 : 0.164266 (sd 0.010878)
+tensorflow-mobilenet : 0.039643 (sd 0.002287)
 
 tensorflow(opt, XLA, r1.3)
 tensorflow-vgg-16 : 0.151689 (sd 0.006856)
