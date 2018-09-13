@@ -65,9 +65,9 @@ caffe2(mkl, 1.0)
 caffe2-vgg-16 : 0.526263 (sd 0.026561)
 caffe2-mobilenet : 0.041188 (sd 0.007531)
 
-mxnet(0.11)
-mxnet-vgg-16 : 0.896940 (sd 0.258074)
-mxnet-mobilenet : 0.209141 (sd 0.060472)
+mxnet(1.3.0)
+mxnet-vgg-16 : 0.505703 (sd 0.169324)
+mxnet-mobilenet : 0.041478 (sd 0.005498)
 
 mxnet(mkl)
 mxnet-vgg-16 : 0.176063 (sd 0.239229)
