@@ -77,9 +77,9 @@ pytorch(0.4.1)
 pytorch-vgg-16 : 0.546202 (sd 0.008096)
 pytorch-mobilenet : 0.113275 (sd 0.006721)
 
-nnabla
-nnabla-vgg-16 : 1.472355 (sd 0.040928)
-nnabla-mobilenet : 3.984539 (sd 0.018452)
+nnabla(0.9.5)
+nnabla-vgg-16 : 1.444331 (sd 0.023142)
+nnabla-mobilenet : 4.267674 (sd 0.043402)
 
 tensorflow(pip, v1.10.1)
 tensorflow-vgg-16 : 0.206103 (sd 0.011668)
