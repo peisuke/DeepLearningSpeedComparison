@@ -69,9 +69,9 @@ mxnet(1.3.0)
 mxnet-vgg-16 : 0.505703 (sd 0.169324)
 mxnet-mobilenet : 0.041478 (sd 0.005498)
 
-mxnet(mkl)
-mxnet-vgg-16 : 0.176063 (sd 0.239229)
-mxnet-mobilenet : 0.022441 (sd 0.018798)
+mxnet(1.3.0, mkl)
+mxnet-vgg-16 : 0.114950 (sd 0.188471)
+mxnet-mobilenet : 0.009650 (sd 0.007492)
 
 pytorch(0.4.1)
 pytorch-vgg-16 : 0.546202 (sd 0.008096)
